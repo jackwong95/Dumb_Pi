@@ -1,0 +1,4 @@
+#!/bin/bash
+cd /
+cd /home/pi/Desktop/Raspberry_Shared/Current_Dumb_Pi
+sudo python simple_scheduler.py

@@ -1,17 +1,12 @@
 import imaplib
 import email
+import credentials
 
 from datetime import datetime
 from wakeonlan import wol
 
-with open('.\init_info\settings', 'r') as temp_file:
-    user = temp_file.readline().replace('\n', '')
-    password = temp_file.readline().replace('\n', '')
-    mac = temp_file.readline().replace('\n', '')
-    port = int(temp_file.readline().replace('\n', ''))
-
 server = imaplib.IMAP4_SSL('imap.gmail.com')
-server.login(user, password)
+server.login(credentials.email_login['user'], credentials.email_login['pass'])
 server.select('inbox')
 
 def get_first_text_block(email_message_instance):
@@ -59,4 +54,4 @@ print 'Most recent IP : {}'.format(latest_ip)
 if latest_date_time is None:
     raise Exception('No IP found in email')
 
-wol.send_magic_packet(mac, ip_address=latest_ip, port = port)
+wol.send_magic_packet(credentials.wake_on_lan_settings['mac_add'], ip_address=latest_ip, port = credentials.wake_on_lan_settings['port'])
